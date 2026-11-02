@@ -39,9 +39,27 @@ export const roster: Participant[] = Object.entries(files).sort(([a], [b]) => a.
   return member;
 });
 
+/** 파티 주인장. 모든 화면에서 안내를 맡는 단 하나의 기본 캐릭터. */
+export const HOST_ID = "starlight";
+/** 주인장이 불러올 수 있는 예시 친구들. 처음에는 방에 없고, 버튼으로 부른다. */
+export const FRIEND_IDS = new Set(["blue-builder", "mint-maker", "pink-rookie", "purple-teacher", "yellow-spark"]);
+/** 발표자가 넣어 둔 캐릭터(주인장 + 예시 친구). 실제 참가자와 구분할 때 쓴다. */
+export const EXAMPLE_IDS = new Set([HOST_ID, ...FRIEND_IDS]);
+export const host: Participant = roster.find((p) => p.id === HOST_ID)!;
+export const friends: Participant[] = roster.filter((p) => FRIEND_IDS.has(p.id));
+/** 저장소에 병합된 실제 참가자(주인장·예시 친구 제외). */
+export const contributors: Participant[] = roster.filter((p) => !EXAMPLE_IDS.has(p.id));
+
 export const defaultParticipant: Participant = {
   id: "my-builder", name: "나의 빌더", role: "처음 온 메이커", message: "작은 아이디어부터 함께 만들어요!",
   color: "#FF5934", shape: "round", accessory: "headphones",
+};
+
+/** 발표자의 공개 원본 저장소. 참가자는 이 저장소를 Fork해 PR을 보낸다. */
+export const ORIGIN_REPO = {
+  label: "TheReplitLab/seoul-builders-party",
+  url: "https://github.com/TheReplitLab/seoul-builders-party",
+  forkUrl: "https://github.com/TheReplitLab/seoul-builders-party/fork",
 };
 
 export const PARTICIPANT_PROMPT = `이 저장소의 AGENTS.md를 읽어 주세요.

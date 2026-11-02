@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
-import type { Participant } from "@/lib/party";
+import { HOST_ID, type Participant } from "@/lib/party";
 import { Character } from "@/components/Character";
 import { useCalm } from "@/components/Shell";
 
@@ -22,7 +22,8 @@ export function MemberDetail({ member, isExample, isLocal, onClose }: { member: 
         <h2 className="font-display text-3xl mt-4">{member.name}</h2>
         <p className="text-muted-foreground">{member.role}</p>
         <p className="text-lg mt-3">“{member.message}”</p>
-        {isExample && <p className="mt-3 text-sm bg-muted rounded-xl p-3">발표자가 준비한 <b>예시 캐릭터</b>입니다. 실제 참가자가 아니에요.</p>}
+        {member.id === HOST_ID ? <p className="mt-3 text-sm bg-[#EDE5FF] rounded-xl p-3" data-testid="text-host-note"><b>파티 주인장</b>입니다. 발표자가 준비한 안내 캐릭터로, 화면마다 순서를 안내해요. 실제 참가자가 아니에요.</p>
+          : isExample && <p className="mt-3 text-sm bg-muted rounded-xl p-3">주인장이 불러온 <b>예시 친구</b>입니다. 실제 참가자가 아니에요.</p>}
         {isLocal && <p className="mt-3 text-sm bg-[#1B2036] text-[#F7F1E6] rounded-xl p-3"><b>LOCAL · 이 브라우저 전용</b> 리허설 결과예요. 저장소 명단에는 없습니다.</p>}
         <pre className="mt-4 text-xs bg-foreground text-background rounded-xl p-3 overflow-auto">{JSON.stringify(member, null, 2)}</pre>
       </div>

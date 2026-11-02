@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Participant } from "@/lib/party";
+import { HOST_ID, type Participant } from "@/lib/party";
 import { Character } from "@/components/Character";
 import { useCalm } from "@/components/Shell";
 
@@ -41,9 +41,10 @@ export function PartyRoom({ members, exampleIds, localIds, sourceLabel, onSelect
             const s = SLOTS[i];
             const isEx = exampleIds?.has(p.id);
             const isLocal = localIds?.has(p.id);
+            const isHost = p.id === HOST_ID;
             return (
               <button key={p.id} onClick={() => onSelect(p)} data-testid={`${idPrefix}-${p.id}`}
-                aria-label={`${p.name} · ${p.role}${isEx ? " · 예시" : ""}${isLocal ? " · 이 브라우저 전용" : ""} · 자세히 보기`}
+                aria-label={`${p.name} · ${p.role}${isHost ? " · 주인장" : isEx ? " · 예시" : ""}${isLocal ? " · 이 브라우저 전용" : ""} · 자세히 보기`}
                 className="attendee absolute group flex flex-col items-center focus:outline-none"
                 style={{ left: `${s.x}%`, top: `${s.y}%`, width: "11%", zIndex: Math.round(s.y), ["--d" as string]: `${i * 110}ms` }}>
                 <span className="w-full [&_svg]:w-full [&_svg]:h-auto transition-transform group-hover:-translate-y-1 group-focus-visible:-translate-y-1">
@@ -53,8 +54,8 @@ export function PartyRoom({ members, exampleIds, localIds, sourceLabel, onSelect
                   {p.name}
                 </span>
                 {(isEx || isLocal) && (
-                  <span className={`mt-0.5 rounded-full px-1.5 text-[10px] font-bold border border-foreground ${isLocal ? "bg-[#1B2036] text-[#F7F1E6]" : "bg-muted"}`}>
-                    {isLocal ? "LOCAL" : "예시"}
+                  <span className={`mt-0.5 rounded-full px-1.5 text-[10px] font-bold border border-foreground ${isLocal ? "bg-[#1B2036] text-[#F7F1E6]" : isHost ? "bg-[#EDE5FF]" : "bg-muted"}`}>
+                    {isLocal ? "LOCAL" : isHost ? "주인장" : "예시"}
                   </span>
                 )}
               </button>
