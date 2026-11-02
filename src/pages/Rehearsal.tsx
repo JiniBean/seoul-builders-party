@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { PartyRoom } from "@/components/PartyRoom";
 import { MemberDetail } from "@/components/MemberDetail";
-import { EXAMPLE_IDS } from "@/pages/Roster";
 import { MonitorSmartphone, RotateCcw, Send, MessageSquareWarning, CheckCircle2, PartyPopper } from "lucide-react";
-import { defaultParticipant, participantErrors, roster, type Participant } from "@/lib/party";
+import { defaultParticipant, participantErrors, roster, host, contributors, EXAMPLE_IDS, type Participant } from "@/lib/party";
 import { Character } from "@/components/Character";
 import { ParticipantEditor, ErrorList } from "@/components/ParticipantEditor";
 import { useCalm } from "@/components/Shell";
@@ -99,14 +98,14 @@ export default function RehearsalPage() {
       {(showParty || s.stage === "accepted") && s.accepted.length > 0 && (
         <section id="local-party" className="mt-10" data-testid="panel-local-party">
           <h2 className="font-display text-3xl">내 브라우저 속 파티 룸 <span className="text-sm font-sans rounded-full bg-[#1B2036] text-[#F7F1E6] px-2 py-0.5 align-middle">LOCAL · 이 브라우저만</span></h2>
-          <p className="text-sm text-muted-foreground mt-1 mb-4">예시 캐릭터와 같은 방에 들어온 모습을 미리 봐요. 실제 저장소 명단과 메인 파티 룸은 바뀌지 않습니다.</p>
-          <PartyRoom members={[...roster, ...s.accepted]} exampleIds={EXAMPLE_IDS} localIds={new Set(s.accepted.map((a) => a.id))} sourceLabel="LOCAL 리허설 · 저장소 아님" onSelect={setSel} testid="panel-local-room" idPrefix="local-room-member" />
+          <p className="text-sm text-muted-foreground mt-1 mb-4">주인장 별빛이 있는 방에 들어온 모습을 미리 봐요. 실제 저장소 명단과 메인 파티 룸은 바뀌지 않습니다.</p>
+          <PartyRoom members={[host, ...contributors, ...s.accepted]} exampleIds={EXAMPLE_IDS} localIds={new Set(s.accepted.map((a) => a.id))} sourceLabel="LOCAL 리허설 · 저장소 아님" onSelect={setSel} testid="panel-local-room" idPrefix="local-room-member" />
         </section>
       )}
       {sel && <MemberDetail member={sel} isExample={EXAMPLE_IDS.has(sel.id)} isLocal={s.accepted.some((a) => a.id === sel.id)} onClose={() => setSel(null)} />}
 
       <section className="mt-10">
-        <h2 className="font-display text-3xl">로컬 명단 <span className="text-base font-sans text-muted-foreground">이 브라우저에만 보여요 · 저장소 명단 {roster.length}명은 그대로</span></h2>
+        <h2 className="font-display text-3xl">로컬 명단 <span className="text-base font-sans text-muted-foreground">이 브라우저에만 보여요 · 저장소 명단(참가자 {contributors.length}명)은 그대로</span></h2>
         {s.accepted.length === 0 ? <p className="ink-card p-6 mt-4 text-muted-foreground" data-testid="status-local-empty">아직 받아들인 캐릭터가 없어요.</p> : (
           <div className="flex flex-wrap gap-4 mt-4">
             {s.accepted.map((p) => (

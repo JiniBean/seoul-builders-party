@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { Pause, Play } from "lucide-react";
+import { ORIGIN_REPO } from "@/lib/party";
 
 const MotionCtx = createContext(false);
 export const useCalm = () => useContext(MotionCtx);
@@ -53,7 +54,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <footer className="border-t-2 border-foreground mt-16">
           <div className="max-w-6xl mx-auto px-4 py-6 text-sm text-muted-foreground flex flex-wrap gap-x-6 gap-y-1">
             <span className="font-display text-foreground">서울 빌더즈 파티</span>
-            <span>실제 GitHub 저장소 링크: 아직 설정되지 않음</span>
+            <span>원본 저장소: <a href={ORIGIN_REPO.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 break-all" data-testid="link-footer-origin-repo">{ORIGIN_REPO.label}</a></span>
             <span>자동 배포: 설정되지 않음 — 병합 후 호스트를 다시 빌드해야 반영됩니다</span>
           </div>
         </footer>

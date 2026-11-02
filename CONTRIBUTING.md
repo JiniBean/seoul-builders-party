@@ -2,7 +2,7 @@
 
 이 프로젝트는 Repos·GitHub 기여 흐름을 배우기 위한 독립 워크숍 작품입니다.
 
-1. 발표자의 공개 원본 저장소를 자신의 GitHub 계정으로 Fork합니다.
+1. 발표자의 공개 원본 저장소(https://github.com/TheReplitLab/seoul-builders-party)를 자신의 GitHub 계정으로 Fork합니다.
 2. Repos에서 **내 Fork**를 연결하고 실행합니다. 원본에 쓰기 권한을 주는 방식이 아닙니다.
 3. `src/participants`에 새 JSON 파일 하나를 만듭니다. 파일명과 id는 같아야 합니다.
 4. 닉네임·관심 분야·한마디·색상·모양·액세서리를 정합니다. 다른 사람의 파일은 고치지 않습니다.
